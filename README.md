@@ -7,7 +7,7 @@ use mutter::{Model, ModelType};
 
 let model = Model::download(&ModelType::BaseEn).unwrap();
 let mp3: Vec<u8> = download_mp3();
-let transcription = model.transcribe_audio(mp3, false, false).unwrap();
+let transcription = model.transcribe_audio(mp3, false, false, None).unwrap();
 println!("{}", transcription.as_text());
 println!("{}", transcription.as_srt());
 ```

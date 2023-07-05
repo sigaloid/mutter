@@ -11,7 +11,8 @@
 //! let mp3: Vec<u8> = download_mp3(); // Your own function to download audio
 //! let translate = false;
 //! let individual_word_timestamps = false;
-//! let transcription = model.transcribe_audio(mp3, translate, individual_word_timestamps).unwrap();
+//! let threads = Some(8);
+//! let transcription = model.transcribe_audio(mp3, translate, individual_word_timestamps, threads).unwrap();
 //! println!("{}", transcription.as_text());
 //! println!("{}", transcription.as_srt());
 //! ```

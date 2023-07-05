@@ -4,6 +4,8 @@ use std::time::Duration;
 
 pub use crate::Model;
 
+// Repurposed from https://github.com/m1guelpf/whisper-cli-rs/. Fixed numerous bugs/typos
+
 /// Transcript of an audio.
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Transcript {
