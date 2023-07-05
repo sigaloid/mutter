@@ -51,7 +51,7 @@ I would love to extend this crate to have more advanced noise reduction. Outside
 
 # Credits
 
-@tazz4843 for their wonderful work on the (whisper-rs)[https://github.com/tazz4843/whisper-rs] bindings. This crate essentially adds just two features above it: transcoding, and downloading models.
+@tazz4843 for their wonderful work on the [whisper-rs](https://github.com/tazz4843/whisper-rs) bindings. This crate essentially adds just two features above it: transcoding, and downloading models.
 
 ### Show appreciation
 
