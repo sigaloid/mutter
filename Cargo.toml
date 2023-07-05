@@ -7,6 +7,8 @@ description = "Easy-to-use bindings to the Whisper.cpp machine learning transcri
 homepage = "https://github.com/sigaloid/mutter"
 repository = "https://github.com/sigaloid/mutter"
 documentation = "https://docs.rs/mutter"
+keywords = ["whisper", "openai", "transcription", "machine-learning"]
+categories = ["science", "multimedia::audio", "accessibility"]
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
