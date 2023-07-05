@@ -1,0 +1,40 @@
+[package]
+name = "mutter"
+version = "0.1.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+audrey = "0.3.0"
+log = "0.4.19"
+num = "0.4.0"
+num_cpus = "1.15.0"
+rodio = { version = "0.17.1" }
+serde = { version = "1.0.164", features = ["derive"] }
+serde_json = "1.0.96"
+strum = { version = "0.24.1", features = ["derive"] }
+ureq = "2.6.2"
+whisper-rs = "0.8.0"
+
+[features]
+default = []
+
+simd = []
+coreml = ["whisper-rs/coreml"]
+cuda = ["whisper-rs/cuda"]
+opencl = ["whisper-rs/opencl"]
+test-with-tiny-model = []
+
+symphonia-aac = ["rodio/symphonia-aac"]
+symphonia-all = ["rodio/symphonia-all"]
+symphonia-flac = ["rodio/symphonia-flac"]
+symphonia-isomp4 = ["rodio/symphonia-isomp4"]
+symphonia-mp3 = ["rodio/symphonia-mp3"]
+symphonia-vorbis = ["rodio/symphonia-vorbis"]
+symphonia-wav = ["rodio/symphonia-wav"]
+minimp3 = ["rodio/minimp3"]
+
+[dev-dependencies]
+glob = "0.3.1"
