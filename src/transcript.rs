@@ -14,7 +14,7 @@ pub struct Transcript {
     /// List of utterances in the transcript - split by normal segments.
     pub utterances: Vec<Utterance>,
     /// List of words in the transcript - split by each word.
-    /// Only present if `word_timestamps` is `true` in [Model::transcribe_audio].
+    /// Only present if `word_timestamps` is `true` in [`Model::transcribe_audio`].
     pub word_utterances: Option<Vec<Utterance>>,
 }
 
@@ -33,7 +33,8 @@ pub struct Utterance {
 
 impl Transcript {
     /// Returns the transcript as a string.
-    #[must_use] pub fn as_text(&self) -> String {
+    #[must_use]
+    pub fn as_text(&self) -> String {
         self.utterances
             .iter()
             .fold(String::new(), |transcript, fragment| {
@@ -42,7 +43,8 @@ impl Transcript {
     }
 
     /// Returns the transcript in VTT format.
-    #[must_use] pub fn as_vtt(&self) -> String {
+    #[must_use]
+    pub fn as_vtt(&self) -> String {
         let vtt = self
             .utterances
             .iter()
@@ -60,7 +62,8 @@ impl Transcript {
     }
 
     /// Returns the transcript in SRT format.
-    #[must_use] pub fn as_srt(&self) -> String {
+    #[must_use]
+    pub fn as_srt(&self) -> String {
         self.utterances
             .iter()
             .fold((1, String::new()), |(i, transcript), fragment| {

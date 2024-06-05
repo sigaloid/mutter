@@ -35,10 +35,12 @@ fn test_transcribe() {
 
     let mut reader = WavReader::new(Cursor::new(jfk_wav)).unwrap();
     let samples: Result<Vec<i16>, _> = reader.samples().collect();
-    let audio = whisper_rs::convert_integer_to_float_audio(&samples.unwrap());
+    let samples = samples.unwrap();
+    let mut output = vec![0.0f32; samples.len()];
+    let _audio = whisper_rs::convert_integer_to_float_audio(&samples, &mut output).unwrap();
 
     let transcription = model
-        .transcribe_pcm_s16le(&audio, false, false, None)
+        .transcribe_pcm_s16le(&output, false, false, None)
         .unwrap();
     assert!(transcription.as_text().contains("country"));
 }

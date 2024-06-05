@@ -4,7 +4,7 @@
 //! easy and accesible in Rust. It's a wrapper around [whisper-rs](https://github.com/tazz4843/whisper-rs) which is in turn
 //! a wrapper around [whisper.cpp](https://github.com/ggerganov/whisper.cpp).
 //!
-//! ```rust
+//! ```no_run
 //! use mutter::{Model, ModelType};
 //!
 //! let model = Model::download(&ModelType::BaseEn).unwrap();
@@ -69,7 +69,9 @@ use std::{fmt::Display, time::Instant};
 use log::{info, trace};
 use strum::EnumIter;
 use transcript::{Transcript, Utterance};
-use whisper_rs::{FullParams, SamplingStrategy, WhisperContext, WhisperError};
+use whisper_rs::{
+    FullParams, SamplingStrategy, WhisperContext, WhisperContextParameters, WhisperError,
+};
 
 mod tests;
 mod transcode;
@@ -95,9 +97,11 @@ impl Model {
         if !path_converted.exists() {
             return Err(WhisperError::InitError);
         }
+
+        let params: WhisperContextParameters = WhisperContextParameters::default();
         Ok({
             Self {
-                context: WhisperContext::new(path)?,
+                context: WhisperContext::new_with_params(path, params)?,
             }
         })
     }
@@ -132,10 +136,11 @@ impl Model {
             .map_err(ModelError::IoError)?;
         assert_eq!(bytes.len(), len);
         info!("Downloaded model: {}", model);
+        let params: WhisperContextParameters = WhisperContextParameters::default();
 
         Ok({
             Self {
-                context: WhisperContext::new_from_buffer(&bytes)
+                context: WhisperContext::new_from_buffer_with_params(&bytes, params)
                     .map_err(ModelError::WhisperError)?,
             }
         })
@@ -163,9 +168,9 @@ impl Model {
         threads: Option<u16>,
     ) -> Result<Transcript, ModelError> {
         trace!("Decoding audio.");
-        let audio = transcode::decode(audio.as_ref().to_vec());
+        let samples = transcode::decode(audio.as_ref().to_vec())?;
         trace!("Transcribing audio.");
-        self.transcribe_pcm_s16le(&audio, translate, word_timestamps, threads)
+        self.transcribe_pcm_s16le(&samples, translate, word_timestamps, threads)
     }
 
     /// Transcribes audio to text, given the audio is an [f32] float array of codec
@@ -279,16 +284,18 @@ impl Model {
         })
     }
 }
-/// Crate error that contains an enum of all possible errors.
+/// Crate error that contains an enum of all possible errors related to the model.
 #[derive(Debug)]
 pub enum ModelError {
-    /// [WhisperError]. Error either loading model, or during transcription, in the
+    /// [`WhisperError`]. Error either loading model, or during transcription, in the
     /// actual whisper.cpp library
     WhisperError(WhisperError),
-    /// [ureq::Error]. Error downloading model.
+    /// [`ureq::Error`]. Error downloading model.
     DownloadError(Box<ureq::Error>),
-    /// [std::io::Error]. Error reading model.
+    /// [`std::io::Error`]. Error reading model.
     IoError(std::io::Error),
+    /// [`AudioDecodeError`]. Error decoding audio.
+    AudioDecodeError,
 }
 
 #[derive(Debug, EnumIter)]
