@@ -43,7 +43,6 @@
 #![deny(
     anonymous_parameters,
     clippy::all,
-    illegal_floating_point_literal_pattern,
     late_bound_lifetime_arguments,
     path_statements,
     patterns_in_fns_without_body,
@@ -325,13 +324,17 @@ pub enum ModelType {
     /// Size: 1.5 GB.
     Medium,
 
-    /// Large Whisper model.
-    /// Size: 2.9 GB.
-    Large,
-
     /// Large Whisper model - old version.
     /// Size: 2.9 GB.
     LargeV1,
+
+    /// Large Whisper model - V2.
+    /// Size: 2.9 GB.
+    LargeV2,
+
+    /// Large Whisper model - V3.
+    /// Size: 2.9 GB.
+    LargeV3,
 }
 
 impl Display for ModelType {
@@ -349,8 +352,9 @@ impl Display for ModelType {
             Self::Small => write!(f, "small.bin"),
             Self::MediumEn => write!(f, "medium.en.bin"),
             Self::Medium => write!(f, "medium.bin"),
-            Self::Large => write!(f, "large.bin"),
             Self::LargeV1 => write!(f, "large-v1.bin"),
+            Self::LargeV2 => write!(f, "large-v2.bin"),
+            Self::LargeV3 => write!(f, "large-v3.bin"),
         }
     }
 }
