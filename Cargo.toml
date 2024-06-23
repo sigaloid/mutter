@@ -22,7 +22,7 @@ serde = { version = "1.0.203", features = ["derive"] }
 serde_json = "1.0.117"
 strum = { version = "0.26.2", features = ["derive"] }
 ureq = "2.9.7"
-whisper-rs = { version = "0.11.1", features = ["whisper-cpp-log"] }
+whisper-rs = { git = "https://github.com/tazz4843/whisper-rs", branch = "master" }
 
 [features]
 default = []

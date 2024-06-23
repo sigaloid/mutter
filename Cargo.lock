@@ -1481,19 +1481,16 @@ dependencies = [
 
 [[package]]
 name = "whisper-rs"
-version = "0.11.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ed7a191078e189d96d029244ab1dff159775adec71dc89a222e9bb9d21a7d161"
+version = "0.12.0"
+source = "git+https://github.com/tazz4843/whisper-rs?branch=master#f1030ef7626e962caf946927be80b8397ec4b7e4"
 dependencies = [
- "log",
  "whisper-rs-sys",
 ]
 
 [[package]]
 name = "whisper-rs-sys"
-version = "0.9.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2834f4ca6472b02748c6c282a60cea538f962428f79e685c3205a08efd711336"
+version = "0.10.0"
+source = "git+https://github.com/tazz4843/whisper-rs?branch=master#f1030ef7626e962caf946927be80b8397ec4b7e4"
 dependencies = [
  "bindgen",
  "cfg-if",

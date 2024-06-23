@@ -46,7 +46,6 @@
     late_bound_lifetime_arguments,
     path_statements,
     patterns_in_fns_without_body,
-    rust_2018_idioms,
     trivial_numeric_casts,
     unused_extern_crates
 )]
