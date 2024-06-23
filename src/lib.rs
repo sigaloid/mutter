@@ -40,29 +40,6 @@
 //! symphonia-wav = ["rodio/symphonia-wav"]
 //! ```
 //!
-#![deny(
-    anonymous_parameters,
-    clippy::all,
-    late_bound_lifetime_arguments,
-    path_statements,
-    patterns_in_fns_without_body,
-    trivial_numeric_casts,
-    unused_extern_crates
-)]
-#![warn(
-    clippy::dbg_macro,
-    clippy::decimal_literal_representation,
-    clippy::get_unwrap,
-    clippy::nursery,
-    clippy::pedantic,
-    clippy::todo,
-    clippy::unimplemented,
-    clippy::use_debug,
-    clippy::all,
-    unused_qualifications,
-    variant_size_differences
-)]
-#![allow(clippy::must_use_candidate)]
 use std::{fmt::Display, time::Instant};
 
 use log::{info, trace};
