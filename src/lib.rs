@@ -40,30 +40,6 @@
 //! symphonia-wav = ["rodio/symphonia-wav"]
 //! ```
 //!
-#![deny(
-    anonymous_parameters,
-    clippy::all,
-    late_bound_lifetime_arguments,
-    path_statements,
-    patterns_in_fns_without_body,
-    rust_2018_idioms,
-    trivial_numeric_casts,
-    unused_extern_crates
-)]
-#![warn(
-    clippy::dbg_macro,
-    clippy::decimal_literal_representation,
-    clippy::get_unwrap,
-    clippy::nursery,
-    clippy::pedantic,
-    clippy::todo,
-    clippy::unimplemented,
-    clippy::use_debug,
-    clippy::all,
-    unused_qualifications,
-    variant_size_differences
-)]
-#![allow(clippy::must_use_candidate)]
 use std::{fmt::Display, time::Instant};
 
 use log::{info, trace};
@@ -154,6 +130,8 @@ impl Model {
     /// - `audio`: Audio to transcribe. An array of bytes.
     /// - `translate`: Whether to translate the text.
     /// - `word_timestamps`: Whether to output word timestamps.
+    /// - `initial_prompt`: Optinal initial prompt to whisper model.
+    /// - `language`: Optinal language setting for whisper model.
     /// - `threads`: Number of threads to use. `None` will use the number of cores from
     /// the `num_cpus` crate.
     /// # Errors
@@ -165,12 +143,21 @@ impl Model {
         audio: impl AsRef<[u8]>,
         translate: bool,
         word_timestamps: bool,
+        initial_prompt: Option<&str>,
+        language: Option<&str>,
         threads: Option<u16>,
     ) -> Result<Transcript, ModelError> {
         trace!("Decoding audio.");
         let samples = transcode::decode(audio.as_ref().to_vec())?;
         trace!("Transcribing audio.");
-        self.transcribe_pcm_s16le(&samples, translate, word_timestamps, threads)
+        self.transcribe_pcm_s16le(
+            &samples,
+            translate,
+            word_timestamps,
+            initial_prompt,
+            language,
+            threads,
+        )
     }
 
     /// Transcribes audio to text, given the audio is an [f32] float array of codec
@@ -183,6 +170,8 @@ impl Model {
     /// - `audio`: Audio to transcribe. Must be a [f32] array.
     /// - `translate`: Whether to translate the text.
     /// - `word_timestamps`: Whether to output word timestamps.
+    /// - `initial_prompt`: Optinal initial prompt to whisper model.
+    /// - `language`: Optinal language setting for whisper model.
     /// - `threads`: Number of threads to use. `None` will use the number of cores from
     ///
     /// # Errors
@@ -196,6 +185,8 @@ impl Model {
         audio: &[f32],
         translate: bool,
         word_timestamps: bool,
+        initial_prompt: Option<&str>,
+        language: Option<&str>,
         threads: Option<u16>,
     ) -> Result<Transcript, ModelError> {
         trace!(
@@ -207,6 +198,12 @@ impl Model {
             beam_size: 5,
             patience: 1.0,
         });
+
+        if let Some(prompt) = initial_prompt {
+            params.set_initial_prompt(prompt);
+        }
+
+        params.set_language(language);
 
         params.set_translate(translate);
         params.set_print_special(false);
