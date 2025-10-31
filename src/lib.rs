@@ -4,7 +4,7 @@
 //! easy and accesible in Rust. It's a wrapper around [whisper-rs](https://github.com/tazz4843/whisper-rs) which is in turn
 //! a wrapper around [whisper.cpp](https://github.com/ggerganov/whisper.cpp).
 //!
-//! ```no_run
+//! ```rust,ignore
 //! use mutter::{Model, ModelType};
 //!
 //! let model = Model::download(&ModelType::BaseEn).unwrap();
@@ -93,7 +93,6 @@ impl Model {
     /// # Panics
     /// This function shouldn't panic, but may due to the underlying -sys bindings.
     /// It shouldn't panic within _this_ crate.
-
     pub fn download(model: &ModelType) -> Result<Self, ModelError> {
         trace!("Downloading model {}", model);
         let resp = ureq::get(&model.to_string())
@@ -133,11 +132,11 @@ impl Model {
     /// - `initial_prompt`: Optinal initial prompt to whisper model.
     /// - `language`: Optinal language setting for whisper model.
     /// - `threads`: Number of threads to use. `None` will use the number of cores from
-    /// the `num_cpus` crate.
+    ///   the `num_cpus` crate.
     /// # Errors
     /// - [`ModelError`]
     /// # Returns
-    /// [Transcript]    
+    /// [Transcript]
     pub fn transcribe_audio(
         &self,
         audio: impl AsRef<[u8]>,

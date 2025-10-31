@@ -35,6 +35,26 @@ symphonia-vorbis = ["rodio/symphonia-vorbis"]
 symphonia-wav = ["rodio/symphonia-wav"]
 ```
 
+# Whisper backends
+
+Mutter re-exports the upstream `whisper-rs` feature flags so you can opt into the same hardware backends and logging options:
+
+```toml
+coreml = ["whisper-rs/coreml"]
+cuda = ["whisper-rs/cuda"]
+hipblas = ["whisper-rs/hipblas"]
+intel-sycl = ["whisper-rs/intel-sycl"]
+metal = ["whisper-rs/metal"]
+openblas = ["whisper-rs/openblas"]
+openmp = ["whisper-rs/openmp"]
+vulkan = ["whisper-rs/vulkan"]
+_gpu = ["whisper-rs/_gpu"]
+raw-api = ["whisper-rs/raw-api"]
+log_backend = ["whisper-rs/log_backend"]
+tracing_backend = ["whisper-rs/tracing_backend"]
+test-with-tiny-model = ["whisper-rs/test-with-tiny-model"]
+```
+
 # About this crate
 
 This crate is largely a thin wrapper around whisper-rs, that simply opens up transcription to any file format (it handles conversion via `rodio`). Whisper-rs handles the actual bindings to the Whisper.cpp library. I wrote this because I didn't want to reimplement the conversion + re-encoding to 16-bit mono PCM WAV every single time I wanted to use Whisper in a new Rust library, and my initial implementation relying on `ffmpeg` existing on the target device was not at all compatible. While the targets are limited by whisper-rs and by extension whisper.cpp's supported targets, and while ffmpeg is pretty universal, I wanted to portable-ify as much as possible. In addition, my university's compute clusters don't have FFmpeg by default.

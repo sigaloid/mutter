@@ -1,6 +1,6 @@
 [package]
 name = "mutter"
-version = "0.2.0"
+version = "0.3.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 description = "Easy-to-use bindings to the Whisper.cpp machine learning transcription library!"
@@ -20,9 +20,9 @@ num_cpus = "1.16.0"
 rodio = { version = "0.18.1" }
 serde = { version = "1.0.203", features = ["derive"] }
 serde_json = "1.0.117"
-strum = { version = "0.26.2", features = ["derive"] }
+strum = { version = "0.27.2", features = ["derive"] }
 ureq = "2.9.7"
-whisper-rs = { version = "0.11", features = ["whisper-cpp-log"] }
+whisper-rs = { version = "0.14.4", features = ["log_backend"] }
 
 [features]
 default = []
@@ -30,8 +30,17 @@ default = []
 simd = []
 coreml = ["whisper-rs/coreml"]
 cuda = ["whisper-rs/cuda"]
-opencl = ["whisper-rs/opencl"]
-test-with-tiny-model = []
+hipblas = ["whisper-rs/hipblas"]
+intel-sycl = ["whisper-rs/intel-sycl"]
+metal = ["whisper-rs/metal"]
+openblas = ["whisper-rs/openblas"]
+openmp = ["whisper-rs/openmp"]
+vulkan = ["whisper-rs/vulkan"]
+_gpu = ["whisper-rs/_gpu"]
+raw-api = ["whisper-rs/raw-api"]
+log_backend = ["whisper-rs/log_backend"]
+tracing_backend = ["whisper-rs/tracing_backend"]
+test-with-tiny-model = ["whisper-rs/test-with-tiny-model"]
 
 symphonia-aac = ["rodio/symphonia-aac"]
 symphonia-all = ["rodio/symphonia-all"]

@@ -40,7 +40,7 @@ fn test_transcribe() {
     let _audio = whisper_rs::convert_integer_to_float_audio(&samples, &mut output).unwrap();
 
     let transcription = model
-        .transcribe_pcm_s16le(&output, false, false, None)
+        .transcribe_pcm_s16le(&output, false, false, None, None, None)
         .unwrap();
     assert!(transcription.as_text().contains("country"));
 }
@@ -51,7 +51,7 @@ fn test_transcribe_with_transcode() {
     let kliks_mp3 = include_bytes!("../samples/3kliks-cut.mp3");
 
     let transcription = model
-        .transcribe_audio(kliks_mp3, false, false, None)
+        .transcribe_audio(kliks_mp3, false, false, None, None, None)
         .unwrap();
     assert!(transcription.as_text().contains("Valve"));
 }
